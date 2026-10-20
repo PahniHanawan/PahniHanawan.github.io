@@ -22,7 +22,7 @@ Website portofolio resmi Pahni Hanawan, Web Developer dari Kabupaten Bandung spe
 ├── index.html        # Halaman utama portofolio
 ├── 404.html          # Halaman fallback 404
 ├── PAS FOTO.png      # Foto profil
-├── certificate/      # 11 Sertifikat & kredensial terverifikasi
+├── certificate/      # 16 Sertifikat & kredensial terverifikasi (termasuk halaman depan & belakang)
 └── README.md         # Dokumentasi repositori
 \`\`\`
 
@@ -31,5 +31,5 @@ Website portofolio resmi Pahni Hanawan, Web Developer dari Kabupaten Bandung spe
 ## 📬 Kontak
 
 - **Email**: [pahni1232@gmail.com](mailto:pahni1232@gmail.com)
-- **LinkedIn**: [linkedin.com/in/pahni-hanawan-a6a428377](https://www.linkedin.com/in/pahni-hanawan-a6a428377/)
+- **LinkedIn**: [linkedin.com/in/pahni-hanawan](https://www.linkedin.com/in/pahni-hanawan/)
 - **GitHub**: [github.com/PahniHanawan](https://github.com/PahniHanawan)
