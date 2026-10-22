@@ -117,7 +117,8 @@
     }
   </style>
 
-  <!-- Prevent FOUC Theme Script -->
+  <script src="translations.js"></script>
+  <!-- Prevent FOUC Theme & Lang Script -->
   <script>
     (function() {
       try {
@@ -127,6 +128,10 @@
           document.documentElement.classList.add('dark');
         } else {
           document.documentElement.classList.remove('dark');
+        }
+        var storedLang = localStorage.getItem('portfolio_lang');
+        if (storedLang === 'en') {
+          document.documentElement.lang = 'en';
         }
       } catch (e) {
         document.documentElement.classList.add('dark');
@@ -146,6 +151,7 @@
 
   <!-- Accessibility Skip Link -->
   <a href="#konten-utama" 
+     data-i18n="nav.skip"
      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-brand focus:text-on-brand focus:rounded-md focus:shadow-md focus:outline-none focus:ring-2 focus:ring-ringcol font-medium">
     Lewati ke konten utama
   </a>
@@ -165,27 +171,42 @@
 
       <!-- Desktop Navlinks -->
       <nav class="hidden md:flex items-center gap-1 lg:gap-2" aria-label="Navigasi utama">
-        <a href="#proyek" class="px-3.5 py-2 text-sm font-medium text-ink-muted hover:text-ink transition-colors relative hover:after:absolute hover:after:bottom-0 hover:after:left-3.5 hover:after:right-3.5 hover:after:h-0.5 hover:after:bg-brand rounded-md focus:outline-none focus:ring-2 focus:ring-ringcol">
+        <a href="#proyek" data-i18n="nav.projects" class="px-3.5 py-2 text-sm font-medium text-ink-muted hover:text-ink transition-colors relative hover:after:absolute hover:after:bottom-0 hover:after:left-3.5 hover:after:right-3.5 hover:after:h-0.5 hover:after:bg-brand rounded-md focus:outline-none focus:ring-2 focus:ring-ringcol">
           Proyek
         </a>
-        <a href="#pengalaman" class="px-3.5 py-2 text-sm font-medium text-ink-muted hover:text-ink transition-colors relative hover:after:absolute hover:after:bottom-0 hover:after:left-3.5 hover:after:right-3.5 hover:after:h-0.5 hover:after:bg-brand rounded-md focus:outline-none focus:ring-2 focus:ring-ringcol">
+        <a href="#pengalaman" data-i18n="nav.experience" class="px-3.5 py-2 text-sm font-medium text-ink-muted hover:text-ink transition-colors relative hover:after:absolute hover:after:bottom-0 hover:after:left-3.5 hover:after:right-3.5 hover:after:h-0.5 hover:after:bg-brand rounded-md focus:outline-none focus:ring-2 focus:ring-ringcol">
           Pengalaman
         </a>
-        <a href="#latar-belakang" class="px-3.5 py-2 text-sm font-medium text-ink-muted hover:text-ink transition-colors relative hover:after:absolute hover:after:bottom-0 hover:after:left-3.5 hover:after:right-3.5 hover:after:h-0.5 hover:after:bg-brand rounded-md focus:outline-none focus:ring-2 focus:ring-ringcol">
+        <a href="#latar-belakang" data-i18n="nav.background" class="px-3.5 py-2 text-sm font-medium text-ink-muted hover:text-ink transition-colors relative hover:after:absolute hover:after:bottom-0 hover:after:left-3.5 hover:after:right-3.5 hover:after:h-0.5 hover:after:bg-brand rounded-md focus:outline-none focus:ring-2 focus:ring-ringcol">
           Latar Belakang
         </a>
-        <a href="#kontak" class="ml-2 px-4 py-2 text-sm font-semibold text-brand border border-brand hover:bg-brand hover:text-on-brand transition-all rounded-xl focus:outline-none focus:ring-2 focus:ring-ringcol">
+        <a href="#kontak" data-i18n="nav.contact" class="ml-2 px-4 py-2 text-sm font-semibold text-brand border border-brand hover:bg-brand hover:text-on-brand transition-all rounded-xl focus:outline-none focus:ring-2 focus:ring-ringcol">
           Kontak
         </a>
       </nav>
 
-      <!-- Actions: Theme Toggle & Mobile Menu Trigger -->
+      <!-- Actions: Language Switcher, Theme Toggle & Mobile Menu Trigger -->
       <div class="flex items-center gap-2">
+        <!-- Language Switcher Pill Button -->
+        <button id="lang-toggle" 
+                type="button" 
+                aria-label="Ganti bahasa ke English"
+                title="Beralih Bahasa (ID / EN)"
+                data-i18n-aria="nav.langAria"
+                data-i18n-title="nav.langTitle"
+                class="h-10 px-2.5 rounded-full flex items-center gap-1 border border-line hover:border-line-strong text-ink bg-surface text-xs font-mono font-medium transition-all focus:outline-none focus:ring-2 focus:ring-ringcol cursor-pointer select-none">
+          <span id="lang-indicator-id" class="px-1.5 py-0.5 rounded-md font-bold text-on-brand bg-brand shadow-xs transition-colors">ID</span>
+          <span class="text-line-strong text-[11px] font-normal">/</span>
+          <span id="lang-indicator-en" class="px-1.5 py-0.5 rounded-md text-ink-muted hover:text-ink transition-colors">EN</span>
+        </button>
+
         <button id="theme-toggle" 
                 type="button" 
                 aria-pressed="false"
                 aria-label="Mode gelap"
                 title="Beralih tema"
+                data-i18n-aria="nav.themeAria"
+                data-i18n-title="nav.themeTitle"
                 class="w-10 h-10 rounded-full flex items-center justify-center border border-line hover:border-line-strong text-ink hover:text-brand bg-surface transition-all focus:outline-none focus:ring-2 focus:ring-ringcol">
           <!-- Sun Icon (shown in dark mode) -->
           <svg id="theme-icon-sun" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
@@ -203,6 +224,7 @@
                 aria-controls="mobile-menu"
                 aria-expanded="false"
                 aria-label="Buka menu navigasi"
+                data-i18n-aria="nav.mobileOpen"
                 class="md:hidden w-10 h-10 rounded-xl flex flex-col items-center justify-center gap-1.5 border border-line hover:border-line-strong bg-surface text-ink focus:outline-none focus:ring-2 focus:ring-ringcol">
           <span class="w-5 h-0.5 bg-current rounded-full transition-transform origin-center"></span>
           <span class="w-5 h-0.5 bg-current rounded-full transition-opacity"></span>
@@ -230,6 +252,7 @@
       <button id="mobile-menu-close" 
               type="button" 
               aria-label="Tutup menu"
+              data-i18n-aria="nav.mobileClose"
               class="w-10 h-10 rounded-full flex items-center justify-center border border-line text-ink hover:text-brand focus:outline-none focus:ring-2 focus:ring-ringcol">
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -237,22 +260,34 @@
       </button>
     </div>
 
-    <nav class="flex flex-col gap-2 my-auto py-8" aria-label="Navigasi mobile">
-      <a href="#proyek" class="mobile-nav-link text-2xl font-heading font-semibold text-ink hover:text-brand py-3 border-b border-line/50 transition-colors">
+    <!-- Mobile Language Selector Bar -->
+    <div class="pt-4 pb-2 border-b border-line/60 flex items-center justify-between">
+      <span class="text-xs font-mono uppercase tracking-wider text-ink-muted font-medium" data-i18n="nav.langLabel">Pilihan Bahasa</span>
+      <button id="mobile-lang-toggle" 
+              type="button" 
+              class="px-2.5 py-1 rounded-full flex items-center gap-1.5 border border-line bg-surface text-xs font-mono font-medium">
+        <span id="mobile-lang-id" class="px-2.5 py-1 rounded-lg font-bold text-on-brand bg-brand shadow-xs transition-colors">ID</span>
+        <span class="text-line-strong text-xs">/</span>
+        <span id="mobile-lang-en" class="px-2.5 py-1 rounded-lg text-ink-muted hover:text-ink transition-colors">EN</span>
+      </button>
+    </div>
+
+    <nav class="flex flex-col gap-2 my-auto py-6" aria-label="Navigasi mobile">
+      <a href="#proyek" data-i18n="nav.projects" class="mobile-nav-link text-2xl font-heading font-semibold text-ink hover:text-brand py-3 border-b border-line/50 transition-colors">
         Proyek
       </a>
-      <a href="#pengalaman" class="mobile-nav-link text-2xl font-heading font-semibold text-ink hover:text-brand py-3 border-b border-line/50 transition-colors">
+      <a href="#pengalaman" data-i18n="nav.experience" class="mobile-nav-link text-2xl font-heading font-semibold text-ink hover:text-brand py-3 border-b border-line/50 transition-colors">
         Pengalaman
       </a>
-      <a href="#latar-belakang" class="mobile-nav-link text-2xl font-heading font-semibold text-ink hover:text-brand py-3 border-b border-line/50 transition-colors">
+      <a href="#latar-belakang" data-i18n="nav.background" class="mobile-nav-link text-2xl font-heading font-semibold text-ink hover:text-brand py-3 border-b border-line/50 transition-colors">
         Latar Belakang
       </a>
-      <a href="#kontak" class="mobile-nav-link mt-4 text-center text-lg font-heading font-semibold bg-brand text-on-brand py-3.5 rounded-xl hover:bg-brand-hover transition-colors shadow-sm">
+      <a href="#kontak" data-i18n="nav.contactMe" class="mobile-nav-link mt-4 text-center text-lg font-heading font-semibold bg-brand text-on-brand py-3.5 rounded-xl hover:bg-brand-hover transition-colors shadow-sm">
         Hubungi Saya
       </a>
     </nav>
 
-    <div class="pt-4 border-t border-line text-center text-xs font-mono text-ink-muted">
+    <div class="pt-4 border-t border-line text-center text-xs font-mono text-ink-muted" data-i18n="nav.mobileLocation">
       Kabupaten Bandung &middot; Web Developer
     </div>
   </div>
@@ -269,7 +304,7 @@
             <!-- Eyebrow Mono -->
             <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-surface-alt border border-line text-xs font-mono uppercase tracking-wider text-ink-muted mb-4 sm:mb-6">
               <span class="w-2 h-2 rounded-full bg-brand"></span>
-              Web Developer &middot; Kabupaten Bandung
+              <span data-i18n="hero.eyebrow">Web Developer &middot; Kabupaten Bandung</span>
             </div>
 
             <!-- Name Display H1 -->
@@ -278,24 +313,24 @@
             </h1>
 
             <!-- Tagline (OQ-6: Maksimal 90 karakter) -->
-            <p class="text-base sm:text-lg font-medium text-brand mb-5">
+            <p data-i18n="hero.tagline" class="text-base sm:text-lg font-medium text-brand mb-5">
               Membangun aplikasi web Laravel yang andal, rapi, dan berdampak nyata.
             </p>
 
             <!-- Ringkasan CV (Body-lg, 3-4 kalimat tanpa klaim berlebihan) -->
-            <p class="text-base sm:text-lg text-ink-muted leading-relaxed mb-6 max-w-2xl">
+            <p data-i18n="hero.summary" class="text-base sm:text-lg text-ink-muted leading-relaxed mb-6 max-w-2xl">
               Lulusan S1 Teknik Informatika (IPK 3.78) yang fokus mengembangkan sistem informasi berbasis PHP dan Laravel. Berpengalaman nyata merancang aplikasi web end-to-end, mulai dari pemantauan proyek saat magang di Perum BULOG hingga sistem inventaris kampus dan sistem pendukung keputusan skripsi.
             </p>
 
             <!-- 3 FactChips (Hanya dari CV) -->
             <div class="flex flex-wrap gap-2.5 mb-8">
-              <span class="inline-flex items-center px-3 py-1.5 rounded-md bg-surface border border-line text-xs sm:text-sm font-mono text-ink font-medium">
+              <span data-i18n="hero.chipEdu" class="inline-flex items-center px-3 py-1.5 rounded-md bg-surface border border-line text-xs sm:text-sm font-mono text-ink font-medium">
                 🎓 S1 Informatika &middot; IPK 3.78
               </span>
-              <span class="inline-flex items-center px-3 py-1.5 rounded-md bg-surface border border-line text-xs sm:text-sm font-mono text-ink font-medium">
+              <span data-i18n="hero.chipIntern" class="inline-flex items-center px-3 py-1.5 rounded-md bg-surface border border-line text-xs sm:text-sm font-mono text-ink font-medium">
                 🏢 Magang di Perum BULOG
               </span>
-              <span class="inline-flex items-center px-3 py-1.5 rounded-md bg-surface border border-line text-xs sm:text-sm font-mono text-ink font-medium">
+              <span data-i18n="hero.chipProjects" class="inline-flex items-center px-3 py-1.5 rounded-md bg-surface border border-line text-xs sm:text-sm font-mono text-ink font-medium">
                 ⚡ 5 Proyek Laravel
               </span>
             </div>
@@ -304,12 +339,13 @@
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
               <a href="#proyek" 
                  class="inline-flex justify-center items-center px-6 py-3.5 rounded-xl bg-brand hover:bg-brand-hover text-on-brand font-semibold text-sm sm:text-base transition-all duration-150 active:translate-y-px focus:outline-none focus:ring-2 focus:ring-ringcol focus:ring-offset-2 focus:ring-offset-paper shadow-sm">
-                Lihat Proyek
+                <span data-i18n="hero.btnProjects">Lihat Proyek</span>
                 <svg class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
               </a>
               <a href="#kontak" 
+                 data-i18n="hero.btnContact"
                  class="inline-flex justify-center items-center px-6 py-3.5 rounded-xl border border-line-strong hover:border-brand text-ink hover:text-brand font-semibold text-sm sm:text-base transition-all duration-150 active:translate-y-px focus:outline-none focus:ring-2 focus:ring-ringcol">
                 Hubungi Saya
               </a>
@@ -337,7 +373,7 @@
               <!-- Verified Chip -->
               <div class="absolute -bottom-3 -right-2 sm:bottom-4 sm:-right-4 bg-surface border border-line rounded-lg px-3 py-1.5 shadow-sm text-xs font-mono font-medium text-ink flex items-center gap-1.5">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                Tersedia untuk Kerja
+                <span data-i18n="hero.available">Tersedia untuk Kerja</span>
               </div>
             </div>
           </div>
@@ -354,12 +390,12 @@
         <div class="mb-12">
           <div class="flex items-center gap-3 mb-2">
             <span class="w-8 h-0.5 bg-brand"></span>
-            <span class="font-mono text-xs uppercase tracking-widest text-brand font-semibold">Portofolio</span>
+            <span data-i18n="projects.eyebrow" class="font-mono text-xs uppercase tracking-widest text-brand font-semibold">Portofolio</span>
           </div>
-          <h2 class="font-heading font-bold text-2xl sm:text-4xl text-ink tracking-tight">
+          <h2 data-i18n="projects.title" class="font-heading font-bold text-2xl sm:text-4xl text-ink tracking-tight">
             Proyek Pilihan
           </h2>
-          <p class="mt-2 text-sm sm:text-base text-ink-muted max-w-2xl">
+          <p data-i18n="projects.desc" class="mt-2 text-sm sm:text-base text-ink-muted max-w-2xl">
             Lima proyek web nyata yang dibangun menggunakan Laravel dan MySQL, lengkap dengan repositori terbuka di GitHub.
           </p>
         </div>
@@ -371,17 +407,17 @@
           <article class="lg:col-span-2 bg-surface border border-line hover:border-brand rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-150 hover:shadow-card-light group relative">
             <div>
               <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                <span class="font-mono text-xs font-semibold uppercase tracking-wider text-brand px-2.5 py-1 rounded bg-brand-soft border border-brand/20">
+                <span data-i18n="projects.bulog.tag" class="font-mono text-xs font-semibold uppercase tracking-wider text-brand px-2.5 py-1 rounded bg-brand-soft border border-brand/20">
                   Magang &middot; Perum BULOG
                 </span>
                 <span class="font-mono text-xs text-ink-muted">2025</span>
               </div>
 
-              <h3 class="font-heading font-bold text-xl sm:text-2xl text-ink group-hover:text-brand transition-colors mb-3">
+              <h3 data-i18n="projects.bulog.title" class="font-heading font-bold text-xl sm:text-2xl text-ink group-hover:text-brand transition-colors mb-3">
                 Aplikasi Monitoring Pekerjaan
               </h3>
 
-              <p class="text-sm sm:text-base text-ink-muted leading-relaxed mb-6">
+              <p data-i18n="projects.bulog.desc" class="text-sm sm:text-base text-ink-muted leading-relaxed mb-6">
                 Sistem pemantauan siklus proyek teknis dari tahap izin prinsip, penerbitan kontrak &amp; SPK, pengajuan termin pembayaran, hingga progres fisik lapangan secara real-time. Dilengkapi dashboard visual, repositori berkas, dan hak akses multi-role (Staf, Verifikator, Manajemen).
               </p>
 
@@ -403,11 +439,11 @@
                 <svg class="w-4 h-4" viewBox="0 0 16 16" fill="currentColor">
                   <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
                 </svg>
-                Periksa Repo GitHub
+                <span data-i18n="projects.bulog.repo">Periksa Repo GitHub</span>
                 <span class="sr-only">(buka di tab baru)</span>
                 <span aria-hidden="true">&rarr;</span>
               </a>
-              <span class="text-xs font-mono text-ink-muted">Proyek Utama</span>
+              <span data-i18n="projects.bulog.featured" class="text-xs font-mono text-ink-muted">Proyek Utama</span>
             </div>
           </article>
 
@@ -415,17 +451,17 @@
           <article class="bg-surface border border-line hover:border-brand rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-150 hover:shadow-card-light group">
             <div>
               <div class="flex items-center justify-between gap-2 mb-4">
-                <span class="font-mono text-xs font-semibold uppercase tracking-wider text-brand px-2 py-0.5 rounded bg-surface-alt border border-line">
+                <span data-i18n="projects.jitanichi.tag" class="font-mono text-xs font-semibold uppercase tracking-wider text-brand px-2 py-0.5 rounded bg-surface-alt border border-line">
                   Skripsi
                 </span>
                 <span class="font-mono text-xs text-ink-muted">2026</span>
               </div>
 
-              <h3 class="font-heading font-bold text-lg sm:text-xl text-ink group-hover:text-brand transition-colors mb-2.5">
+              <h3 data-i18n="projects.jitanichi.title" class="font-heading font-bold text-lg sm:text-xl text-ink group-hover:text-brand transition-colors mb-2.5">
                 Sistem Jitanichi Go
               </h3>
 
-              <p class="text-sm text-ink-muted leading-relaxed mb-5">
+              <p data-i18n="projects.jitanichi.desc" class="text-sm text-ink-muted leading-relaxed mb-5">
                 Sistem Pendukung Keputusan (SPK) untuk menentukan prioritas promosi produk dengan kombinasi metode AHP (pembobotan kriteria) dan SAW (pemeringkatan alternatif), disertai ekspor laporan PDF.
               </p>
 
@@ -442,7 +478,7 @@
                  target="_blank" 
                  rel="noopener" 
                  class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:text-brand-hover focus:outline-none focus:ring-2 focus:ring-ringcol rounded">
-                Repo GitHub <span class="sr-only">(buka di tab baru)</span> &rarr;
+                <span data-i18n="projects.jitanichi.repo">Repo GitHub</span> <span class="sr-only">(buka di tab baru)</span> &rarr;
               </a>
             </div>
           </article>
@@ -451,17 +487,17 @@
           <article class="bg-surface border border-line hover:border-brand rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-150 hover:shadow-card-light group">
             <div>
               <div class="flex items-center justify-between gap-2 mb-4">
-                <span class="font-mono text-xs font-semibold uppercase tracking-wider text-ink-muted px-2 py-0.5 rounded bg-surface-alt border border-line">
+                <span data-i18n="projects.ppdb.tag" class="font-mono text-xs font-semibold uppercase tracking-wider text-ink-muted px-2 py-0.5 rounded bg-surface-alt border border-line">
                   Proyek Web
                 </span>
                 <span class="font-mono text-xs text-ink-muted">Laravel 11</span>
               </div>
 
-              <h3 class="font-heading font-bold text-lg sm:text-xl text-ink group-hover:text-brand transition-colors mb-2.5">
+              <h3 data-i18n="projects.ppdb.title" class="font-heading font-bold text-lg sm:text-xl text-ink group-hover:text-brand transition-colors mb-2.5">
                 PPDB SMA Darul Hikmah
               </h3>
 
-              <p class="text-sm text-ink-muted leading-relaxed mb-5">
+              <p data-i18n="projects.ppdb.desc" class="text-sm text-ink-muted leading-relaxed mb-5">
                 Aplikasi pendaftaran peserta didik baru online dengan form pendaftaran multi-langkah, modul unggah berkas, verifikasi berkas oleh panitia, serta notifikasi status kelulusan.
               </p>
 
@@ -478,7 +514,7 @@
                  target="_blank" 
                  rel="noopener" 
                  class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:text-brand-hover focus:outline-none focus:ring-2 focus:ring-ringcol rounded">
-                Repo GitHub <span class="sr-only">(buka di tab baru)</span> &rarr;
+                <span data-i18n="projects.ppdb.repo">Repo GitHub</span> <span class="sr-only">(buka di tab baru)</span> &rarr;
               </a>
             </div>
           </article>
@@ -487,17 +523,17 @@
           <article class="bg-surface border border-line hover:border-brand rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-150 hover:shadow-card-light group">
             <div>
               <div class="flex items-center justify-between gap-2 mb-4">
-                <span class="font-mono text-xs font-semibold uppercase tracking-wider text-brand px-2 py-0.5 rounded bg-surface-alt border border-line">
+                <span data-i18n="projects.inventory.tag" class="font-mono text-xs font-semibold uppercase tracking-wider text-brand px-2 py-0.5 rounded bg-surface-alt border border-line">
                   Magang &middot; Piksi Ganesha
                 </span>
                 <span class="font-mono text-xs text-ink-muted">2020</span>
               </div>
 
-              <h3 class="font-heading font-bold text-lg sm:text-xl text-ink group-hover:text-brand transition-colors mb-2.5">
+              <h3 data-i18n="projects.inventory.title" class="font-heading font-bold text-lg sm:text-xl text-ink group-hover:text-brand transition-colors mb-2.5">
                 Web Inventory
               </h3>
 
-              <p class="text-sm text-ink-muted leading-relaxed mb-5">
+              <p data-i18n="projects.inventory.desc" class="text-sm text-ink-muted leading-relaxed mb-5">
                 Sistem inventarisasi sarana dan prasarana kampus: pencatatan aset per gedung dan ruangan, monitoring stok barang, riwayat peminjaman, serta rekapitulasi data format Excel dan PDF.
               </p>
 
@@ -514,7 +550,7 @@
                  target="_blank" 
                  rel="noopener" 
                  class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:text-brand-hover focus:outline-none focus:ring-2 focus:ring-ringcol rounded">
-                Repo GitHub <span class="sr-only">(buka di tab baru)</span> &rarr;
+                <span data-i18n="projects.inventory.repo">Repo GitHub</span> <span class="sr-only">(buka di tab baru)</span> &rarr;
               </a>
             </div>
           </article>
@@ -523,17 +559,17 @@
           <article class="bg-surface border border-line hover:border-brand rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-150 hover:shadow-card-light group">
             <div>
               <div class="flex items-center justify-between gap-2 mb-4">
-                <span class="font-mono text-xs font-semibold uppercase tracking-wider text-ink-muted px-2 py-0.5 rounded bg-surface-alt border border-line">
+                <span data-i18n="projects.covid.tag" class="font-mono text-xs font-semibold uppercase tracking-wider text-ink-muted px-2 py-0.5 rounded bg-surface-alt border border-line">
                   Ujikom SMK
                 </span>
                 <span class="font-mono text-xs text-ink-muted">2021</span>
               </div>
 
-              <h3 class="font-heading font-bold text-lg sm:text-xl text-ink group-hover:text-brand transition-colors mb-2.5">
+              <h3 data-i18n="projects.covid.title" class="font-heading font-bold text-lg sm:text-xl text-ink group-hover:text-brand transition-colors mb-2.5">
                 Web Tracking Covid
               </h3>
 
-              <p class="text-sm text-ink-muted leading-relaxed mb-5">
+              <p data-i18n="projects.covid.desc" class="text-sm text-ink-muted leading-relaxed mb-5">
                 Pelacak data statistik kasus COVID-19 global dan nasional hingga unit daerah. Integrasi REST API publik, visualisasi data kasus, serta antarmuka reaktif menggunakan Livewire.
               </p>
 
@@ -550,7 +586,7 @@
                  target="_blank" 
                  rel="noopener" 
                  class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:text-brand-hover focus:outline-none focus:ring-2 focus:ring-ringcol rounded">
-                Repo GitHub <span class="sr-only">(buka di tab baru)</span> &rarr;
+                <span data-i18n="projects.covid.repo">Repo GitHub</span> <span class="sr-only">(buka di tab baru)</span> &rarr;
               </a>
             </div>
           </article>
@@ -570,12 +606,12 @@
             <div class="sticky top-28">
               <div class="flex items-center gap-3 mb-2">
                 <span class="w-8 h-0.5 bg-brand"></span>
-                <span class="font-mono text-xs uppercase tracking-widest text-brand font-semibold">Karier</span>
+                <span data-i18n="exp.eyebrow" class="font-mono text-xs uppercase tracking-widest text-brand font-semibold">Karier</span>
               </div>
-              <h2 class="font-heading font-bold text-2xl sm:text-4xl text-ink tracking-tight mb-4">
+              <h2 data-i18n="exp.title" class="font-heading font-bold text-2xl sm:text-4xl text-ink tracking-tight mb-4">
                 Pengalaman Kerja
               </h2>
-              <p class="text-sm sm:text-base text-ink-muted leading-relaxed">
+              <p data-i18n="exp.desc" class="text-sm sm:text-base text-ink-muted leading-relaxed">
                 Pengalaman magang praktis membangun dan memelihara aplikasi web yang dipakai oleh tim operasional instansi secara nyata.
               </p>
             </div>
@@ -592,30 +628,30 @@
                 
                 <div class="bg-surface border border-line rounded-2xl p-6 sm:p-7 shadow-sm transition-all duration-150 group-hover:border-line-strong">
                   <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
-                    <h3 class="font-heading font-bold text-lg sm:text-xl text-ink">
+                    <h3 data-i18n="exp.bulog.role" class="font-heading font-bold text-lg sm:text-xl text-ink">
                       Web Developer Intern
                     </h3>
-                    <time class="font-mono text-xs sm:text-sm text-brand font-semibold">
+                    <time data-i18n="exp.bulog.period" class="font-mono text-xs sm:text-sm text-brand font-semibold">
                       September &ndash; November 2025
                     </time>
                   </div>
 
-                  <p class="font-mono text-xs text-ink-muted mb-4 uppercase tracking-wide">
+                  <p data-i18n="exp.bulog.company" class="font-mono text-xs text-ink-muted mb-4 uppercase tracking-wide">
                     Perum BULOG &middot; Bandung, Jawa Barat
                   </p>
 
                   <ul class="space-y-2.5 text-sm sm:text-base text-ink-muted leading-relaxed">
                     <li class="flex items-start gap-2.5">
                       <span class="text-brand text-xs mt-1.5" aria-hidden="true">&bull;</span>
-                      <span>Merancang dan membangun <strong>Aplikasi Monitoring Pekerjaan</strong> berbasis Laravel untuk memantau status fisik proyek, kontrak SPK, dan termin pembayaran secara berkala.</span>
+                      <span data-i18n-html="exp.bulog.b1">Merancang dan membangun <strong>Aplikasi Monitoring Pekerjaan</strong> berbasis Laravel untuk memantau status fisik proyek, kontrak SPK, dan termin pembayaran secara berkala.</span>
                     </li>
                     <li class="flex items-start gap-2.5">
                       <span class="text-brand text-xs mt-1.5" aria-hidden="true">&bull;</span>
-                      <span>Mengembangkan antarmuka dashboard interaktif untuk rekapitulasi progres pekerjaan teknis serta repositori dokumen arsip digital proyek.</span>
+                      <span data-i18n="exp.bulog.b2">Mengembangkan antarmuka dashboard interaktif untuk rekapitulasi progres pekerjaan teknis serta repositori dokumen arsip digital proyek.</span>
                     </li>
                     <li class="flex items-start gap-2.5">
                       <span class="text-brand text-xs mt-1.5" aria-hidden="true">&bull;</span>
-                      <span>Menerapkan pembagian hak akses pengguna multi-role untuk staf lapangan, verifikator dokumen, dan tim pimpinan.</span>
+                      <span data-i18n="exp.bulog.b3">Menerapkan pembagian hak akses pengguna multi-role untuk staf lapangan, verifikator dokumen, dan tim pimpinan.</span>
                     </li>
                   </ul>
 
@@ -625,12 +661,12 @@
                       <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                       </svg>
-                      Kredensial Terverifikasi &middot; No: 015/10040/HM.03/11/2025
+                      <span data-i18n="exp.bulog.verified">Kredensial Terverifikasi &middot; No: 015/10040/HM.03/11/2025</span>
                     </span>
                     <button type="button" 
-                            onclick="openCertModal('certificate/Certificate_5.jpeg', 'Sertifikat Praktik Kerja / Magang Web Developer', 'Perum BULOG Kantor Wilayah Jawa Barat', '28 November 2025', 'Telah melaksanakan program magang 3 bulan di Perum BULOG Kantor Wilayah Jawa Barat terhitung mulai 01 September 2025 s.d 28 November 2025 sebagai Web Developer. Ditandatangani Wakil Pemimpin Wilayah (No: 015/10040/HM.03/11/2025).')"
+                            onclick="openCertModal('certificate/Certificate_5.jpeg', 'Sertifikat Praktik Kerja / Magang Web Developer', 'Perum BULOG Kantor Wilayah Jawa Barat', '28 November 2025', 'Telah melaksanakan program magang 3 bulan di Perum BULOG Kantor Wilayah Jawa Barat terhitung mulai 01 September 2025 s.d 28 November 2025 sebagai Web Developer. Ditandatangani Wakil Pemimpin Wilayah (No: 015/10040/HM.03/11/2025).', null, 0)"
                             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-alt border border-line hover:border-brand text-xs font-mono font-semibold text-brand hover:text-brand-hover transition-colors">
-                      <span>📄 Buka Sertifikat BULOG</span>
+                      <span data-i18n="exp.bulog.btn">📄 Buka Sertifikat BULOG</span>
                       <span>&rarr;</span>
                     </button>
                   </div>
@@ -644,30 +680,30 @@
                 
                 <div class="bg-surface border border-line rounded-2xl p-6 sm:p-7 shadow-sm transition-all duration-150 group-hover:border-line-strong">
                   <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
-                    <h3 class="font-heading font-bold text-lg sm:text-xl text-ink">
+                    <h3 data-i18n="exp.piksi.role" class="font-heading font-bold text-lg sm:text-xl text-ink">
                       Web Developer Intern
                     </h3>
-                    <time class="font-mono text-xs sm:text-sm text-brand font-semibold">
+                    <time data-i18n="exp.piksi.period" class="font-mono text-xs sm:text-sm text-brand font-semibold">
                       Juni &ndash; Agustus 2020
                     </time>
                   </div>
 
-                  <p class="font-mono text-xs text-ink-muted mb-4 uppercase tracking-wide">
+                  <p data-i18n="exp.piksi.company" class="font-mono text-xs text-ink-muted mb-4 uppercase tracking-wide">
                     Politeknik Piksi Ganesha &middot; Bandung, Jawa Barat
                   </p>
 
                   <ul class="space-y-2.5 text-sm sm:text-base text-ink-muted leading-relaxed">
                     <li class="flex items-start gap-2.5">
                       <span class="text-brand text-xs mt-1.5" aria-hidden="true">&bull;</span>
-                      <span>Membangun <strong>Web Inventory</strong> sarana dan prasarana kampus berbasis framework Laravel 5.8 dan basis data MySQL.</span>
+                      <span data-i18n-html="exp.piksi.b1">Membangun <strong>Web Inventory</strong> sarana dan prasarana kampus berbasis framework Laravel 5.8 dan basis data MySQL.</span>
                     </li>
                     <li class="flex items-start gap-2.5">
                       <span class="text-brand text-xs mt-1.5" aria-hidden="true">&bull;</span>
-                      <span>Mengembangkan modul pelacakan inventaris aset per ruangan/gedung kampus, pencatatan transaksi peminjaman barang, serta rekapitulasi data.</span>
+                      <span data-i18n="exp.piksi.b2">Mengembangkan modul pelacakan inventaris aset per ruangan/gedung kampus, pencatatan transaksi peminjaman barang, serta rekapitulasi data.</span>
                     </li>
                     <li class="flex items-start gap-2.5">
                       <span class="text-brand text-xs mt-1.5" aria-hidden="true">&bull;</span>
-                      <span>Menyediakan fitur ekspor data laporan inventaris dalam format Excel dan dokumen cetak PDF.</span>
+                      <span data-i18n="exp.piksi.b3">Menyediakan fitur ekspor data laporan inventaris dalam format Excel dan dokumen cetak PDF.</span>
                     </li>
                   </ul>
                 </div>
@@ -689,12 +725,12 @@
         <div class="mb-12">
           <div class="flex items-center gap-3 mb-2">
             <span class="w-8 h-0.5 bg-brand"></span>
-            <span class="font-mono text-xs uppercase tracking-widest text-brand font-semibold">Kompetensi</span>
+            <span data-i18n="bg.eyebrow" class="font-mono text-xs uppercase tracking-widest text-brand font-semibold">Kompetensi</span>
           </div>
-          <h2 class="font-heading font-bold text-2xl sm:text-4xl text-ink tracking-tight">
+          <h2 data-i18n="bg.title" class="font-heading font-bold text-2xl sm:text-4xl text-ink tracking-tight">
             Latar Belakang
           </h2>
-          <p class="mt-2 text-sm sm:text-base text-ink-muted max-w-2xl">
+          <p data-i18n="bg.desc" class="mt-2 text-sm sm:text-base text-ink-muted max-w-2xl">
             Pendidikan formal, skripsi teknis, serta keahlian utama yang bersumber langsung dari rekam jejak saya.
           </p>
         </div>
@@ -705,7 +741,7 @@
           <!-- Column 1: Pendidikan -->
           <div class="space-y-6">
             <h3 class="font-heading font-bold text-xl text-ink flex items-center gap-2 pb-3 border-b border-line">
-              <span class="text-brand">🎓</span> Pendidikan Formal
+              <span class="text-brand">🎓</span> <span data-i18n="bg.edu.title">Pendidikan Formal</span>
             </h3>
 
             <!-- STMIK Mardira Indonesia -->
@@ -714,16 +750,16 @@
                 <h4 class="font-heading font-bold text-lg text-ink">
                   STMIK Mardira Indonesia
                 </h4>
-                <span class="font-mono text-xs text-brand font-semibold">2022 &ndash; 2026</span>
+                <span data-i18n="bg.edu.stmik.period" class="font-mono text-xs text-brand font-semibold">2022 &ndash; 2026</span>
               </div>
-              <p class="text-sm font-medium text-ink mb-1">S1 Teknik Informatika &middot; IPK 3.78</p>
-              <p class="text-xs font-mono text-ink-muted mb-4">Kabupaten Bandung, Jawa Barat</p>
+              <p data-i18n="bg.edu.stmik.degree" class="text-sm font-medium text-ink mb-1">S1 Teknik Informatika &middot; IPK 3.78</p>
+              <p data-i18n="bg.edu.stmik.loc" class="text-xs font-mono text-ink-muted mb-4">Kabupaten Bandung, Jawa Barat</p>
               
               <div class="pt-3 border-t border-line/60">
-                <span class="text-xs font-mono uppercase tracking-wider text-brand font-semibold block mb-1">
+                <span data-i18n="bg.edu.stmik.thesisLabel" class="text-xs font-mono uppercase tracking-wider text-brand font-semibold block mb-1">
                   Judul Skripsi:
                 </span>
-                <p class="text-sm text-ink-muted italic">
+                <p data-i18n="bg.edu.stmik.thesisTitle" class="text-sm text-ink-muted italic">
                   &ldquo;Sistem Jitanichi Go &mdash; Sistem Pendukung Keputusan Rekomendasi Promosi Produk Menggunakan Metode AHP dan SAW&rdquo;
                 </p>
               </div>
@@ -735,24 +771,24 @@
                 <h4 class="font-heading font-bold text-lg text-ink">
                   SMK Assalaam Bandung
                 </h4>
-                <span class="font-mono text-xs text-brand font-semibold">2018 &ndash; 2021</span>
+                <span data-i18n="bg.edu.smk.period" class="font-mono text-xs text-brand font-semibold">2018 &ndash; 2021</span>
               </div>
-              <p class="text-sm font-medium text-ink mb-1">Rekayasa Perangkat Lunak (RPL)</p>
-              <p class="text-xs font-mono text-ink-muted mb-4">Bandung, Jawa Barat</p>
+              <p data-i18n="bg.edu.smk.degree" class="text-sm font-medium text-ink mb-1">Rekayasa Perangkat Lunak (RPL)</p>
+              <p data-i18n="bg.edu.smk.loc" class="text-xs font-mono text-ink-muted mb-4">Bandung, Jawa Barat</p>
 
               <div class="pt-3 border-t border-line/60">
-                <span class="text-xs font-mono uppercase tracking-wider text-ink-muted font-semibold block mb-1">
+                <span data-i18n="bg.edu.smk.ujikomLabel" class="text-xs font-mono uppercase tracking-wider text-ink-muted font-semibold block mb-1">
                   Uji Kompetensi Keahlian (Ujikom):
                 </span>
-                <p class="text-sm text-ink-muted mb-3">
+                <p data-i18n="bg.edu.smk.ujikomDesc" class="text-sm text-ink-muted mb-3">
                   Membangun aplikasi Web Tracking Covid terintegrasi REST API publik untuk memantau sebaran kasus.
                 </p>
                 <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-line/40">
-                  <span class="text-xs font-mono text-ink-muted">Mitra Industri: CV. Icommits &middot; Skor 85,71</span>
+                  <span data-i18n="bg.edu.smk.ujikomPartner" class="text-xs font-mono text-ink-muted">Mitra Industri: CV. Icommits &middot; Skor 85,71</span>
                   <button type="button" 
-                          onclick="openCertModal('certificate/Certificate_4.jpeg', 'Sertifikat Uji Kompetensi Keahlian RPL (Skor 85,71)', 'CV. Icommits &amp; SMK Assalaam Bandung', 'Mei 2021', 'Hasil uji kompetensi keahlian Rekayasa Perangkat Lunak dari mitra industri CV. Icommits Karya Solusi dengan perolehan hasil akhir 85,71 (Predikat Baik Sekali / A). Dilengkapi rincian nilai 7 unit kompetensi SKKNI di halaman belakang.', 'certificate/HalamanBelakang Certificate_4.jpeg')"
+                          onclick="openCertModal('certificate/Certificate_4.jpeg', 'Sertifikat Uji Kompetensi Keahlian RPL (Skor 85,71)', 'CV. Icommits &amp; SMK Assalaam Bandung', 'Mei 2021', 'Hasil uji kompetensi keahlian Rekayasa Perangkat Lunak dari mitra industri CV. Icommits Karya Solusi dengan perolehan hasil akhir 85,71 (Predikat Baik Sekali / A). Dilengkapi rincian nilai 7 unit kompetensi SKKNI di halaman belakang.', 'certificate/HalamanBelakang Certificate_4.jpeg', 1)"
                           class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-alt border border-line hover:border-brand text-xs font-mono font-semibold text-brand hover:text-brand-hover transition-colors">
-                    <span>📋 Sertifikat UKK &amp; Transkrip</span>
+                    <span data-i18n="bg.edu.smk.ujikomBtn">📋 Sertifikat UKK &amp; Transkrip</span>
                     <span>&rarr;</span>
                   </button>
                 </div>
@@ -763,12 +799,12 @@
           <!-- Column 2: Keahlian (3 Kelompok dari CV) -->
           <div class="space-y-6">
             <h3 class="font-heading font-bold text-xl text-ink flex items-center gap-2 pb-3 border-b border-line">
-              <span class="text-brand">⚡</span> Keahlian &amp; Stack
+              <span class="text-brand">⚡</span> <span data-i18n="bg.skills.title">Keahlian &amp; Stack</span>
             </h3>
 
             <!-- Grup 1: Pemrograman Web -->
             <div class="bg-surface border border-line rounded-2xl p-6 shadow-sm">
-              <h4 class="font-mono text-xs uppercase tracking-wider text-brand font-semibold mb-3">
+              <h4 data-i18n="bg.skills.web" class="font-mono text-xs uppercase tracking-wider text-brand font-semibold mb-3">
                 Pemrograman Web &amp; Framework
               </h4>
               <div class="flex flex-wrap gap-2">
@@ -783,7 +819,7 @@
 
             <!-- Grup 2: Basis Data -->
             <div class="bg-surface border border-line rounded-2xl p-6 shadow-sm">
-              <h4 class="font-mono text-xs uppercase tracking-wider text-brand font-semibold mb-3">
+              <h4 data-i18n="bg.skills.db" class="font-mono text-xs uppercase tracking-wider text-brand font-semibold mb-3">
                 Basis Data &amp; Arsitektur
               </h4>
               <div class="flex flex-wrap gap-2">
@@ -796,11 +832,11 @@
 
             <!-- Grup 3: Bahasa -->
             <div class="bg-surface border border-line rounded-2xl p-6 shadow-sm">
-              <h4 class="font-mono text-xs uppercase tracking-wider text-brand font-semibold mb-3">
+              <h4 data-i18n="bg.skills.lang" class="font-mono text-xs uppercase tracking-wider text-brand font-semibold mb-3">
                 Bahasa Komunikasi
               </h4>
               <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1.5 rounded-lg bg-surface-alt border border-line text-sm font-medium text-ink">
+                <span data-i18n-html="bg.skills.langVal" class="px-3 py-1.5 rounded-lg bg-surface-alt border border-line text-sm font-medium text-ink">
                   Bahasa Indonesia &middot; <span class="text-ink-muted">Penutur Asli (Native)</span>
                 </span>
               </div>
@@ -808,10 +844,10 @@
 
             <!-- Eksplorasi Tambahan -->
             <div class="bg-surface-alt/40 border border-dashed border-line rounded-2xl p-5">
-              <h4 class="font-mono text-xs uppercase tracking-wider text-ink-muted font-semibold mb-2">
+              <h4 data-i18n="bg.skills.learning" class="font-mono text-xs uppercase tracking-wider text-ink-muted font-semibold mb-2">
                 Sedang Mendalami
               </h4>
-              <p class="text-sm text-ink-muted">
+              <p data-i18n="bg.skills.learningDesc" class="text-sm text-ink-muted">
                 Odoo ERP (Manajemen modul bisnis) &amp; Bahasa Pemrograman Go (Golang).
               </p>
             </div>
@@ -825,12 +861,12 @@
             <div>
               <div class="flex items-center gap-2 mb-2">
                 <span class="w-6 h-0.5 bg-brand"></span>
-                <span class="font-mono text-xs uppercase tracking-widest text-brand font-semibold">Kredensial</span>
+                <span data-i18n="certs.eyebrow" class="font-mono text-xs uppercase tracking-widest text-brand font-semibold">Kredensial</span>
               </div>
-              <h3 class="font-heading font-bold text-2xl sm:text-3xl text-ink tracking-tight">
+              <h3 data-i18n="certs.title" class="font-heading font-bold text-2xl sm:text-3xl text-ink tracking-tight">
                 Sertifikat &amp; Lisensi
               </h3>
-              <p class="mt-1 text-xs sm:text-sm text-ink-muted max-w-xl">
+              <p data-i18n="certs.desc" class="mt-1 text-xs sm:text-sm text-ink-muted max-w-xl">
                 16 kredensial resmi, sertifikasi uji kompetensi kejuruan industri, magang BUMN, serta sertifikat pelatihan berstandar SKKNI dan internasional.
               </p>
             </div>
@@ -838,19 +874,19 @@
             <!-- Filter Buttons -->
             <div class="flex flex-wrap gap-1.5 p-1 bg-surface-alt rounded-xl border border-line text-xs font-mono" role="tablist" aria-label="Filter Sertifikat">
               <button type="button" class="cert-filter-btn px-3 py-1.5 rounded-lg bg-surface text-ink font-semibold border border-line shadow-sm transition-all focus:outline-none focus:ring-1 focus:ring-ringcol" data-filter="all">
-                Semua (16)
+                <span data-i18n="certs.filterAll">Semua (16)</span>
               </button>
               <button type="button" class="cert-filter-btn px-3 py-1.5 rounded-lg text-ink-muted hover:text-ink transition-all focus:outline-none focus:ring-1 focus:ring-ringcol" data-filter="magang">
-                Magang &amp; UKK
+                <span data-i18n="certs.filterIntern">Magang &amp; UKK</span>
               </button>
               <button type="button" class="cert-filter-btn px-3 py-1.5 rounded-lg text-ink-muted hover:text-ink transition-all focus:outline-none focus:ring-1 focus:ring-ringcol" data-filter="web-db">
-                Web &amp; Database
+                <span data-i18n="certs.filterWebDb">Web &amp; Database</span>
               </button>
               <button type="button" class="cert-filter-btn px-3 py-1.5 rounded-lg text-ink-muted hover:text-ink transition-all focus:outline-none focus:ring-1 focus:ring-ringcol" data-filter="data">
-                Data Science
+                <span data-i18n="certs.filterData">Data Science</span>
               </button>
               <button type="button" class="cert-filter-btn px-3 py-1.5 rounded-lg text-ink-muted hover:text-ink transition-all focus:outline-none focus:ring-1 focus:ring-ringcol" data-filter="tools">
-                Tools &amp; Jaringan
+                <span data-i18n="certs.filterTools">Tools &amp; Jaringan</span>
               </button>
             </div>
           </div>
@@ -861,17 +897,18 @@
             <!-- 1. Perum BULOG - Magang Web Developer -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="magang web-db"
-                 onclick="openCertModal('certificate/Certificate_5.jpeg', 'Sertifikat Praktik Kerja / Magang Web Developer', 'Perum BULOG Kantor Wilayah Jawa Barat', '28 November 2025', 'Telah melaksanakan program magang 3 bulan di Perum BULOG Kantor Wilayah Jawa Barat terhitung mulai 01 September 2025 s.d 28 November 2025 sebagai Web Developer. Mengembangkan Aplikasi Monitoring Pekerjaan dan dashboard manajemen arsip proyek. Ditandatangani Wakil Pemimpin Wilayah (No: 015/10040/HM.03/11/2025).')">
+                 data-cert-index="0"
+                 onclick="openCertModal('certificate/Certificate_5.jpeg', 'Sertifikat Praktik Kerja / Magang Web Developer', 'Perum BULOG Kantor Wilayah Jawa Barat', '28 November 2025', 'Telah melaksanakan program magang 3 bulan di Perum BULOG Kantor Wilayah Jawa Barat terhitung mulai 01 September 2025 s.d 28 November 2025 sebagai Web Developer. Mengembangkan Aplikasi Monitoring Pekerjaan dan dashboard manajemen arsip proyek. Ditandatangani Wakil Pemimpin Wilayah (No: 015/10040/HM.03/11/2025).', null, 0)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/Certificate_5.jpeg" 
                      alt="Sertifikat Magang Web Developer - Perum BULOG" 
                      loading="lazy"
                      class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
                 <div class="absolute top-2.5 left-2.5 z-10 px-2 py-0.5 rounded-md bg-brand text-on-brand text-[10px] font-mono font-bold shadow-sm flex items-center gap-1">
-                  <span>★ Magang BUMN</span>
+                  <span class="cert-card-badge-bumn">★ Magang BUMN</span>
                 </div>
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -879,20 +916,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-brand-soft text-brand text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-brand-soft text-brand text-[11px] font-mono font-semibold">
                       Perum BULOG Kanwil Jabar
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2025</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2025</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     Sertifikat Magang Web Developer
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Program magang 3 bulan BUMN Perum BULOG merancang dan membangun Aplikasi Monitoring Pekerjaan berbasis Laravel.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -901,7 +938,9 @@
             <!-- 2. UKK RPL - Nilai 85,71 (Icommits & SMK Assalaam) -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="magang web-db"
-                 onclick="openCertModal('certificate/Certificate_4.jpeg', 'Sertifikat Uji Kompetensi Keahlian RPL (Skor 85,71)', 'CV. Icommits &amp; SMK Assalaam Bandung', 'Mei 2021', 'Menyelesaikan Uji Kompetensi Keahlian Rekayasa Perangkat Lunak dari mitra industri CV. Icommits Karya Solusi dengan perolehan hasil akhir 85,71 (Predikat Baik Sekali / A). Halaman belakang memuat transkrip nilai 7 unit kompetensi SKKNI.', 'certificate/HalamanBelakang Certificate_4.jpeg')">
+                 data-cert-index="1"
+                 data-two-page="true"
+                 onclick="openCertModal('certificate/Certificate_4.jpeg', 'Sertifikat Uji Kompetensi Keahlian RPL (Skor 85,71)', 'CV. Icommits &amp; SMK Assalaam Bandung', 'Mei 2021', 'Menyelesaikan Uji Kompetensi Keahlian Rekayasa Perangkat Lunak dari mitra industri CV. Icommits Karya Solusi dengan perolehan hasil akhir 85,71 (Predikat Baik Sekali / A). Halaman belakang memuat transkrip nilai 7 unit kompetensi SKKNI.', 'certificate/HalamanBelakang Certificate_4.jpeg', 1)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/Certificate_4.jpeg" 
                      alt="Sertifikat Uji Kompetensi Keahlian RPL - Skor 85,71" 
@@ -911,10 +950,10 @@
                   <svg class="w-3.5 h-3.5 text-brand-soft" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
                   </svg>
-                  <span>2 Halaman (Depan &amp; Belakang)</span>
+                  <span class="cert-card-pages-badge">2 Halaman (Depan &amp; Belakang)</span>
                 </div>
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -922,20 +961,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
                       Icommits &amp; Assalaam
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2021 &middot; Nilai 85,71</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2021 &middot; Nilai 85,71</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     Uji Kompetensi Keahlian RPL
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Uji kompetensi kelulusan kejuruan RPL berstandar industri dengan penguji CV. Icommits. Dilengkapi rincian nilai SKKNI.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen (2 Halaman)</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen (2 Halaman)</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -944,7 +983,9 @@
             <!-- 3. Mobile Programming & Web App Intermediate (Icommits & Assalaam) -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="magang web-db"
-                 onclick="openCertModal('certificate/Certificate_2.jpeg', 'Mobile Programming &amp; Web Application Training (Intermediate Level)', 'CV. Icommits &amp; SMK Assalaam', '30 April 2021', 'Pelatihan dan program PKL Mobile Programming (Android) dan Web Application (Laravel) Intermediate Level. Halaman belakang menyertakan transkrip 6 kompetensi (OOP, Algoritma, Struktur Data skor 94, UI skor 94, SQL skor 80).', 'certificate/HalamanBelakang Certificate_2.jpeg')">
+                 data-cert-index="2"
+                 data-two-page="true"
+                 onclick="openCertModal('certificate/Certificate_2.jpeg', 'Mobile Programming &amp; Web Application Training (Intermediate Level)', 'CV. Icommits &amp; SMK Assalaam', '30 April 2021', 'Pelatihan dan program PKL Mobile Programming (Android) dan Web Application (Laravel) Intermediate Level. Halaman belakang menyertakan transkrip 6 kompetensi (OOP, Algoritma, Struktur Data skor 94, UI skor 94, SQL skor 80).', 'certificate/HalamanBelakang Certificate_2.jpeg', 2)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/Certificate_2.jpeg" 
                      alt="Pelatihan Mobile Programming & Web Application - Icommits" 
@@ -954,10 +995,10 @@
                   <svg class="w-3.5 h-3.5 text-brand-soft" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
                   </svg>
-                  <span>2 Halaman (Depan &amp; Belakang)</span>
+                  <span class="cert-card-pages-badge">2 Halaman (Depan &amp; Belakang)</span>
                 </div>
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -965,20 +1006,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
                       CV. Icommits
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2021 &middot; Android &amp; Laravel</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2021 &middot; Android &amp; Laravel</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     Mobile &amp; Web App (Intermediate)
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Pelatihan intermediate level Android &amp; Laravel. Memuat evaluasi nilai OOP, Struktur Data, dan UI di halaman belakang.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen (2 Halaman)</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen (2 Halaman)</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -987,7 +1028,9 @@
             <!-- 4. Sertifikat Kompetensi Kejuruan RPL SKKNI (SMK Assalaam & Icommits) -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="magang web-db"
-                 onclick="openCertModal('certificate/Certificate_3.jpeg', 'Sertifikat Kompetensi Rekayasa Perangkat Lunak (SKKNI)', 'SMK Assalaam &amp; CV. Icommits', '08 April 2021', 'Sertifikat Uji Kompetensi Keahlian Kejuruan RPL (No: 053/ASS-UJK/RPL/IV/2021) berstandar SE Mendikbud No. 1 Tahun 2021. Halaman belakang memuat rincian 7 unit kompetensi SKKNI resmi (Struktur Data, OOP, UI, Basis Data, dan Algoritma).', 'certificate/HalamanBelakang Certificate_3.jpeg')">
+                 data-cert-index="3"
+                 data-two-page="true"
+                 onclick="openCertModal('certificate/Certificate_3.jpeg', 'Sertifikat Kompetensi Rekayasa Perangkat Lunak (SKKNI)', 'SMK Assalaam &amp; CV. Icommits', '08 April 2021', 'Sertifikat Uji Kompetensi Keahlian Kejuruan RPL (No: 053/ASS-UJK/RPL/IV/2021) berstandar SE Mendikbud No. 1 Tahun 2021. Halaman belakang memuat rincian 7 unit kompetensi SKKNI resmi (Struktur Data, OOP, UI, Basis Data, dan Algoritma).', 'certificate/HalamanBelakang Certificate_3.jpeg', 3)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/Certificate_3.jpeg" 
                      alt="Sertifikat Kompetensi RPL SKKNI - SMK Assalaam & Icommits" 
@@ -997,10 +1040,10 @@
                   <svg class="w-3.5 h-3.5 text-brand-soft" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
                   </svg>
-                  <span>2 Halaman (Depan &amp; Belakang)</span>
+                  <span class="cert-card-pages-badge">2 Halaman (Depan &amp; Belakang)</span>
                 </div>
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -1008,20 +1051,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
                       SMK Assalaam
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2021 &middot; SKKNI RPL</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2021 &middot; SKKNI RPL</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     Sertifikat Kompetensi Kejuruan RPL
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Sertifikasi uji kompetensi kejuruan RPL resmi. Halaman belakang merinci 7 kode unit kompetensi SKKNI dan predikat nilai.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen (2 Halaman)</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen (2 Halaman)</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -1030,14 +1073,15 @@
             <!-- 5. Uji Kompetensi Komputer & Jaringan (SMK Assalaam) -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="magang tools"
-                 onclick="openCertModal('certificate/Certificate_1.jpeg', 'Uji Kompetensi Komputer &amp; Jaringan Dasar', 'SMK Assalaam Bandung', 'April 2021', 'Lulus uji kompetensi komputer dan jaringan (No: 053/ASS/UJK/TKJ/IV/2021) meliputi: Merakit Personal Komputer (Nilai 80), Menginstal Sistem Operasi Dasar (Nilai 80), dan Jaringan Dasar (Nilai 75). Ditandatangani Kepala Sekolah SMK Assalaam &amp; Kepala Program RPL.')">
+                 data-cert-index="4"
+                 onclick="openCertModal('certificate/Certificate_1.jpeg', 'Uji Kompetensi Komputer &amp; Jaringan Dasar', 'SMK Assalaam Bandung', 'April 2021', 'Lulus uji kompetensi komputer dan jaringan (No: 053/ASS/UJK/TKJ/IV/2021) meliputi: Merakit Personal Komputer (Nilai 80), Menginstal Sistem Operasi Dasar (Nilai 80), dan Jaringan Dasar (Nilai 75). Ditandatangani Kepala Sekolah SMK Assalaam &amp; Kepala Program RPL.', null, 4)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/Certificate_1.jpeg" 
                      alt="Sertifikat Uji Kompetensi Komputer dan Jaringan - SMK Assalaam" 
                      loading="lazy"
                      class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -1045,20 +1089,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
                       SMK Assalaam
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2021 &middot; Hardware &amp; Jaringan</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2021 &middot; Hardware &amp; Jaringan</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     Uji Kompetensi Komputer &amp; Jaringan
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Kompetensi perakitan hardware PC, instalasi sistem operasi workstation, dan konfigurasi jaringan dasar.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -1067,14 +1111,15 @@
             <!-- 1. Pandu Digital Kominfo -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="tools"
-                 onclick="openCertModal('certificate/Sertifikat Pendampingan Pandu Digital-1.png', 'Pendampingan Pandu Digital', 'Kementerian Kominfo RI', '14 Agustus 2023', 'Partisipasi pendampingan Pandu Digital pada kegiatan Literasi Digital Sektor Pendidikan #19 di Kota Bandung bertema Membentuk Pribadi Cerdas Digital.')">
+                 data-cert-index="5"
+                 onclick="openCertModal('certificate/Sertifikat Pendampingan Pandu Digital-1.png', 'Pendampingan Pandu Digital', 'Kementerian Kominfo RI', '14 Agustus 2023', 'Partisipasi pendampingan Pandu Digital pada kegiatan Literasi Digital Sektor Pendidikan #19 di Kota Bandung bertema Membentuk Pribadi Cerdas Digital.', null, 5)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/Sertifikat Pendampingan Pandu Digital-1.png" 
                      alt="Sertifikat Pendampingan Pandu Digital - Kominfo" 
                      loading="lazy"
                      class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -1082,20 +1127,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-brand-soft text-brand text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-brand-soft text-brand text-[11px] font-mono font-semibold">
                       Kominfo RI
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2023</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2023</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     Pendampingan Pandu Digital
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Literasi Digital Sektor Pendidikan #19 Kota Bandung, tema Membentuk Pribadi Cerdas Digital.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -1104,14 +1149,15 @@
             <!-- 2. Kursus PHP Progate -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="web-db"
-                 onclick="openCertModal('certificate/CertificatePHP.png', 'Kursus PHP (Dasar Pengembangan Web)', 'Progate', '13 Oktober 2020', 'Menyelesaikan 4 Study dan 1 Latihan. Kursus mencakup fundamental bahasa PHP untuk pengembangan aplikasi web dinamis.')">
+                 data-cert-index="6"
+                 onclick="openCertModal('certificate/CertificatePHP.png', 'Kursus PHP (Dasar Pengembangan Web)', 'Progate', '13 Oktober 2020', 'Menyelesaikan 4 Study dan 1 Latihan. Kursus mencakup fundamental bahasa PHP untuk pengembangan aplikasi web dinamis.', null, 6)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/CertificatePHP.png" 
                      alt="Sertifikat Kursus PHP - Progate" 
                      loading="lazy"
                      class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -1119,20 +1165,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
                       Progate
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2020</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2020</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     Kursus PHP
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Fundamental sintaks PHP, backend logic, dan penanganan data untuk pengembangan web dinamis.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -1141,14 +1187,15 @@
             <!-- 3. Kursus SQL Progate -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="web-db"
-                 onclick="openCertModal('certificate/CertificateSQL.png', 'Kursus SQL (Manipulasi Database)', 'Progate', '10 Desember 2020', 'Menyelesaikan 4 Study dan 1 Latihan. Kursus mencakup fundamental SQL mengenai dasar untuk memanipulasi database relasional.')">
+                 data-cert-index="7"
+                 onclick="openCertModal('certificate/CertificateSQL.png', 'Kursus SQL (Manipulasi Database)', 'Progate', '10 Desember 2020', 'Menyelesaikan 4 Study dan 1 Latihan. Kursus mencakup fundamental SQL mengenai dasar untuk memanipulasi database relasional.', null, 7)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/CertificateSQL.png" 
                      alt="Sertifikat Kursus SQL - Progate" 
                      loading="lazy"
                      class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -1156,20 +1203,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
                       Progate
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2020</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2020</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     Kursus SQL
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Fundamental Structured Query Language (SQL) untuk query, filtering, dan manipulasi basis data.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -1178,14 +1225,15 @@
             <!-- 4. Fundamental SQL DQLab -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="web-db"
-                 onclick="openCertModal('certificate/certificate-DQLABSQLT1JBCKOH-1.png', 'Fundamental SQL Using SELECT Statement', 'DQLab (UMN & Xeratic)', '10 Mei 2024', 'Sertifikasi penguasaan kueri SELECT statement untuk ekstraksi, filtering klausa WHERE, pengurutan ORDER BY, dan agregasi data.')">
+                 data-cert-index="8"
+                 onclick="openCertModal('certificate/certificate-DQLABSQLT1JBCKOH-1.png', 'Fundamental SQL Using SELECT Statement', 'DQLab (UMN & Xeratic)', '10 Mei 2024', 'Sertifikasi penguasaan kueri SELECT statement untuk ekstraksi, filtering klausa WHERE, pengurutan ORDER BY, dan agregasi data.', null, 8)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/certificate-DQLABSQLT1JBCKOH-1.png" 
                      alt="Fundamental SQL Using SELECT Statement - DQLab" 
                      loading="lazy"
                      class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -1193,20 +1241,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
                       DQLab
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2024</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2024</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     Fundamental SQL: SELECT Statement
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Kueri SELECT relasional, pemfilteran data bersyarat, dan teknik penarikan data terstruktur.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -1215,14 +1263,15 @@
             <!-- 5. Kursus React Progate -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="web-db"
-                 onclick="openCertModal('certificate/CertificateReact.png', 'Kursus React (Web Front-end)', 'Progate', '10 Desember 2020', 'Menyelesaikan 4 Study. Kursus mencakup fundamental React untuk pengembangan antarmuka web Front-end berbasis komponen.')">
+                 data-cert-index="9"
+                 onclick="openCertModal('certificate/CertificateReact.png', 'Kursus React (Web Front-end)', 'Progate', '10 Desember 2020', 'Menyelesaikan 4 Study. Kursus mencakup fundamental React untuk pengembangan antarmuka web Front-end berbasis komponen.', null, 9)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/CertificateReact.png" 
                      alt="Sertifikat Kursus React - Progate" 
                      loading="lazy"
                      class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -1230,20 +1279,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
                       Progate
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2020</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2020</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     Kursus React
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Fundamental React, pengelolaan komponen reusable, props, dan state interaktif frontend.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -1252,14 +1301,15 @@
             <!-- 6. Kursus Git Progate -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="tools"
-                 onclick="openCertModal('certificate/CertificateGit.png', 'Kursus Git (Version Control)', 'Progate', '07 Oktober 2020', 'Menyelesaikan fundamental Git version control: tracking perubahan kode, commit, branching, dan alur kolaborasi pengembang.')">
+                 data-cert-index="10"
+                 onclick="openCertModal('certificate/CertificateGit.png', 'Kursus Git (Version Control)', 'Progate', '07 Oktober 2020', 'Menyelesaikan fundamental Git version control: tracking perubahan kode, commit, branching, dan alur kolaborasi pengembang.', null, 10)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/CertificateGit.png" 
                      alt="Sertifikat Kursus Git - Progate" 
                      loading="lazy"
                      class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -1267,20 +1317,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
                       Progate
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2020</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2020</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     Kursus Git
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Pengelolaan version control Git, repository history, commit staging, dan percabangan kode.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -1289,14 +1339,15 @@
             <!-- 7. Python Fundamental DQLab -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="data"
-                 onclick="openCertModal('certificate/certificate-DQLABINTP1FJPKLO-1.png', 'Python Fundamental for Data Science', 'DQLab (UMN & Xeratic)', '01 Mei 2024', 'Pemahaman dasar bahasa pemrograman Python untuk pengolahan data, struktur kontrol, manipulasi list/tuple/dictionary, dan library data science.')">
+                 data-cert-index="11"
+                 onclick="openCertModal('certificate/certificate-DQLABINTP1FJPKLO-1.png', 'Python Fundamental for Data Science', 'DQLab (UMN & Xeratic)', '01 Mei 2024', 'Pemahaman dasar bahasa pemrograman Python untuk pengolahan data, struktur kontrol, manipulasi list/tuple/dictionary, dan library data science.', null, 11)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/certificate-DQLABINTP1FJPKLO-1.png" 
                      alt="Python Fundamental for Data Science - DQLab" 
                      loading="lazy"
                      class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -1304,20 +1355,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
                       DQLab
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2024</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2024</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     Python Fundamental for Data Science
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Sintaks dasar Python, tipe data terstruktur, logika alur, dan fungsi untuk pipeline data.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -1326,14 +1377,15 @@
             <!-- 8. R Fundamental DQLab -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="data"
-                 onclick="openCertModal('certificate/certificate-DQLABINTR1MUBNVB-1.png', 'R Fundamental for Data Science', 'DQLab (UMN & Xeratic)', '29 April 2024', 'Sertifikasi penguasaan bahasa R untuk analisis data statistik, vektor, data frame, dan visualisasi dasar.')">
+                 data-cert-index="12"
+                 onclick="openCertModal('certificate/certificate-DQLABINTR1MUBNVB-1.png', 'R Fundamental for Data Science', 'DQLab (UMN & Xeratic)', '29 April 2024', 'Sertifikasi penguasaan bahasa R untuk analisis data statistik, vektor, data frame, dan visualisasi dasar.', null, 12)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/certificate-DQLABINTR1MUBNVB-1.png" 
                      alt="R Fundamental for Data Science - DQLab" 
                      loading="lazy"
                      class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -1341,20 +1393,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
                       DQLab
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2024</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2024</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     R Fundamental for Data Science
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Analisis komputasi data statistik, manipulasi data frame, dan struktur vektor dengan bahasa R.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -1363,14 +1415,15 @@
             <!-- 9. Freeclass Data Science DQLab -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="data"
-                 onclick="openCertModal('certificate/certificate-DQLABFREECLASS01UQQDSS-1.png', 'Freeclass: Data Science Fundamentals', 'DQLab (UMN & Xeratic)', '2024', 'Pengenalan lanskap profesi data, alur kerja pengolahan data mentah, dan pemanfaatan wawasan analitik.')">
+                 data-cert-index="13"
+                 onclick="openCertModal('certificate/certificate-DQLABFREECLASS01UQQDSS-1.png', 'Freeclass: Data Science Fundamentals', 'DQLab (UMN & Xeratic)', '2024', 'Pengenalan lanskap profesi data, alur kerja pengolahan data mentah, dan pemanfaatan wawasan analitik.', null, 13)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/certificate-DQLABFREECLASS01UQQDSS-1.png" 
                      alt="Freeclass Data Science Fundamentals - DQLab" 
                      loading="lazy"
                      class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -1378,20 +1431,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
                       DQLab
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2024</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2024</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     Data Science Fundamentals
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Pemahaman menyeluruh dasar-dasar ilmu data, metodologi kuantitatif, dan eksplorasi dataset.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -1400,14 +1453,15 @@
             <!-- 10. Kursus Java Progate -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="web-db"
-                 onclick="openCertModal('certificate/CertificateJava.png', 'Kursus Java (Object-Oriented Programming)', 'Progate', '13 Oktober 2020', 'Fundamental pemrograman Java berbasis Object-Oriented Programming (OOP), class, method, dan manipulasi data berorientasi objek.')">
+                 data-cert-index="14"
+                 onclick="openCertModal('certificate/CertificateJava.png', 'Kursus Java (Object-Oriented Programming)', 'Progate', '13 Oktober 2020', 'Fundamental pemrograman Java berbasis Object-Oriented Programming (OOP), class, method, dan manipulasi data berorientasi objek.', null, 14)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/CertificateJava.png" 
                      alt="Sertifikat Kursus Java - Progate" 
                      loading="lazy"
                      class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -1415,20 +1469,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
                       Progate
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2020</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2020</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     Kursus Java
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Dasar pemrograman Object-Oriented (OOP), modularitas kelas, method, dan struktur logika Java.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -1437,14 +1491,15 @@
             <!-- 11. Kursus Command Line Progate -->
             <div class="cert-card bg-surface border border-line hover:border-brand rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between transition-all duration-150 group cursor-pointer"
                  data-category="tools"
-                 onclick="openCertModal('certificate/CertificateCMD.png', 'Kursus Command Line (UNIX / Terminal)', 'Progate', '07 Oktober 2020', 'Fundamental UNIX Command Line untuk navigasi direktori, eksekusi perintah terminal, dan manajemen file server.')">
+                 data-cert-index="15"
+                 onclick="openCertModal('certificate/CertificateCMD.png', 'Kursus Command Line (UNIX / Terminal)', 'Progate', '07 Oktober 2020', 'Fundamental UNIX Command Line untuk navigasi direktori, eksekusi perintah terminal, dan manajemen file server.', null, 15)">
               <div class="relative w-full aspect-[4/3] bg-surface-alt overflow-hidden border-b border-line">
                 <img src="certificate/CertificateCMD.png" 
                      alt="Sertifikat Kursus Command Line - Progate" 
                      loading="lazy"
                      class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
                 <div class="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
+                  <span class="cert-card-zoom-text px-3 py-1.5 rounded-lg bg-surface/90 text-ink text-xs font-mono font-semibold shadow-md backdrop-blur-sm">
                     🔍 Perbesar Sertifikat
                   </span>
                 </div>
@@ -1452,20 +1507,20 @@
               <div class="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
+                    <span class="cert-card-tag px-2 py-0.5 rounded bg-surface-alt text-brand border border-line text-[11px] font-mono font-semibold">
                       Progate
                     </span>
-                    <span class="text-[11px] font-mono text-ink-muted">2020</span>
+                    <span class="cert-card-year text-[11px] font-mono text-ink-muted">2020</span>
                   </div>
-                  <h4 class="font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
+                  <h4 class="cert-card-title font-heading font-bold text-base text-ink group-hover:text-brand transition-colors mb-1.5 leading-snug">
                     Kursus Command Line
                   </h4>
-                  <p class="text-xs text-ink-muted line-clamp-2">
+                  <p class="cert-card-desc text-xs text-ink-muted line-clamp-2">
                     Perintah terminal UNIX/Linux, operasi sistem berkas, otomasi shell, dan administrasi server.
                   </p>
                 </div>
                 <div class="pt-3 mt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-brand font-semibold">
-                  <span>Lihat Dokumen</span>
+                  <span class="cert-card-view-btn">Lihat Dokumen</span>
                   <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                 </div>
               </div>
@@ -1489,6 +1544,7 @@
               </div>
               <button type="button" 
                       id="cert-modal-close" 
+                      data-i18n-aria="modal.closeAria"
                       aria-label="Tutup jendela sertifikat"
                       class="w-9 h-9 rounded-full flex items-center justify-center border border-line hover:border-brand text-ink hover:text-brand bg-surface focus:outline-none focus:ring-2 focus:ring-ringcol transition-colors shrink-0">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -1502,16 +1558,18 @@
               <div class="flex items-center gap-1.5 p-1 bg-surface rounded-xl border border-line shadow-xs">
                 <button type="button" 
                         id="cert-btn-front" 
+                        data-i18n="modal.btnFront"
                         class="px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all bg-surface text-brand shadow-sm border border-line">
                   📄 Halaman Depan
                 </button>
                 <button type="button" 
                         id="cert-btn-back" 
+                        data-i18n="modal.btnBack"
                         class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all text-ink-muted hover:text-ink">
                   📋 Halaman Belakang (Transkrip Nilai)
                 </button>
               </div>
-              <span id="cert-modal-page-indicator" class="font-mono text-[11px] text-ink-muted hidden sm:inline-block">
+              <span id="cert-modal-page-indicator" data-i18n="modal.indicatorFront" class="font-mono text-[11px] text-ink-muted hidden sm:inline-block">
                 Halaman 1 dari 2 (Depan)
               </span>
             </div>
@@ -1521,6 +1579,8 @@
               <!-- Tombol Navigasi Kiri (Halaman Sebelumnya) -->
               <button type="button" 
                       id="cert-prev-page" 
+                      data-i18n-title="modal.prevAria"
+                      data-i18n-aria="modal.prevAria"
                       title="Halaman sebelumnya (atau tombol panah kiri)" 
                       aria-label="Halaman sebelumnya" 
                       class="hidden absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-surface/90 hover:bg-surface text-ink border border-line shadow-md items-center justify-center transition-all focus:outline-none focus:ring-2 focus:ring-ringcol">
@@ -1535,6 +1595,8 @@
               <!-- Tombol Navigasi Kanan (Halaman Selanjutnya) -->
               <button type="button" 
                       id="cert-next-page" 
+                      data-i18n-title="modal.nextAria"
+                      data-i18n-aria="modal.nextAria"
                       title="Halaman berikutnya (atau tombol panah kanan)" 
                       aria-label="Halaman berikutnya" 
                       class="hidden absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-surface/90 hover:bg-surface text-ink border border-line shadow-md items-center justify-center transition-all focus:outline-none focus:ring-2 focus:ring-ringcol">
@@ -1553,7 +1615,7 @@
                  target="_blank" 
                  rel="noopener" 
                  class="inline-flex items-center gap-1.5 font-mono font-semibold text-brand hover:underline whitespace-nowrap shrink-0">
-                <span id="cert-modal-link-text">Buka Berkas Asli</span> &rarr;
+                <span id="cert-modal-link-text" data-i18n="modal.openOrig">Buka Berkas Asli</span> &rarr;
               </a>
             </div>
           </div>
@@ -1570,13 +1632,13 @@
         <div class="text-center max-w-2xl mx-auto mb-12">
           <div class="inline-flex items-center gap-3 mb-2">
             <span class="w-8 h-0.5 bg-brand"></span>
-            <span class="font-mono text-xs uppercase tracking-widest text-brand font-semibold">Komunikasi</span>
+            <span data-i18n="contact.eyebrow" class="font-mono text-xs uppercase tracking-widest text-brand font-semibold">Komunikasi</span>
             <span class="w-8 h-0.5 bg-brand"></span>
           </div>
-          <h2 class="font-heading font-bold text-2xl sm:text-4xl text-ink tracking-tight">
+          <h2 data-i18n="contact.title" class="font-heading font-bold text-2xl sm:text-4xl text-ink tracking-tight">
             Hubungi Saya
           </h2>
-          <p class="mt-3 text-sm sm:text-base text-ink-muted">
+          <p data-i18n="contact.desc" class="mt-3 text-sm sm:text-base text-ink-muted">
             Saya terbuka untuk kesempatan kerja penuh waktu, kontrak, maupun diskusi teknis. Hubungi saya langsung melalui salah satu jalur di bawah ini.
           </p>
         </div>
@@ -1594,10 +1656,10 @@
                   <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <span class="font-mono text-xs uppercase tracking-wider text-brand font-bold block mb-1">
+              <span data-i18n="contact.emailTag" class="font-mono text-xs uppercase tracking-wider text-brand font-bold block mb-1">
                 Kirim Email (Utama)
               </span>
-              <h3 class="font-heading font-bold text-lg sm:text-xl text-ink mb-2">
+              <h3 data-i18n="contact.emailTitle" class="font-heading font-bold text-lg sm:text-xl text-ink mb-2">
                 Email Langsung
               </h3>
               <p class="text-sm font-mono break-all select-all text-ink font-semibold">
@@ -1605,7 +1667,7 @@
               </p>
             </div>
             <div class="pt-6 mt-4 border-t border-brand/20 flex items-center justify-between text-xs font-semibold text-brand">
-              <span>Buka Aplikasi Email</span>
+              <span data-i18n="contact.emailBtn">Buka Aplikasi Email</span>
               <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
             </div>
           </a>
@@ -1622,10 +1684,10 @@
                   <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
                 </svg>
               </div>
-              <span class="font-mono text-xs uppercase tracking-wider text-ink-muted font-medium block mb-1">
+              <span data-i18n="contact.gitTag" class="font-mono text-xs uppercase tracking-wider text-ink-muted font-medium block mb-1">
                 Kode Sumber
               </span>
-              <h3 class="font-heading font-bold text-lg sm:text-xl text-ink mb-2">
+              <h3 data-i18n="contact.gitTitle" class="font-heading font-bold text-lg sm:text-xl text-ink mb-2">
                 GitHub
               </h3>
               <p class="text-sm font-mono text-ink-muted break-all">
@@ -1633,7 +1695,7 @@
               </p>
             </div>
             <div class="pt-6 mt-4 border-t border-line flex items-center justify-between text-xs font-semibold text-ink group-hover:text-brand">
-              <span>Buka Repositori <span class="sr-only">(buka di tab baru)</span></span>
+              <span data-i18n="contact.gitBtn">Buka Repositori</span>
               <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
             </div>
           </a>
@@ -1650,10 +1712,10 @@
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                 </svg>
               </div>
-              <span class="font-mono text-xs uppercase tracking-wider text-ink-muted font-medium block mb-1">
+              <span data-i18n="contact.inTag" class="font-mono text-xs uppercase tracking-wider text-ink-muted font-medium block mb-1">
                 Profil Profesional
               </span>
-              <h3 class="font-heading font-bold text-lg sm:text-xl text-ink mb-2">
+              <h3 data-i18n="contact.inTitle" class="font-heading font-bold text-lg sm:text-xl text-ink mb-2">
                 LinkedIn
               </h3>
               <p class="text-sm font-mono text-ink-muted break-all">
@@ -1661,7 +1723,7 @@
               </p>
             </div>
             <div class="pt-6 mt-4 border-t border-line flex items-center justify-between text-xs font-semibold text-ink group-hover:text-brand">
-              <span>Terhubung di LinkedIn <span class="sr-only">(buka di tab baru)</span></span>
+              <span data-i18n="contact.inBtn">Terhubung di LinkedIn</span>
               <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
             </div>
           </a>
@@ -1669,7 +1731,7 @@
         </div>
 
         <!-- Lokasi Asal -->
-        <div class="mt-8 text-center text-xs sm:text-sm font-mono text-ink-muted">
+        <div data-i18n="contact.location" class="mt-8 text-center text-xs sm:text-sm font-mono text-ink-muted">
           📍 Domisili: Kabupaten Bandung, Jawa Barat, Indonesia
         </div>
 
@@ -1681,11 +1743,11 @@
   <!-- FOOTER -->
   <footer class="border-t border-line bg-paper py-8 text-xs font-mono text-ink-muted">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div>
+      <div data-i18n-html="footer.copy">
         &copy; 2026 Pahni Hanawan &middot; Dibuat dengan HTML dan Tailwind CSS.
       </div>
       <div>
-        <a href="#hero" class="hover:text-brand transition-colors inline-flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-ringcol rounded p-1">
+        <a href="#hero" data-i18n="footer.top" class="hover:text-brand transition-colors inline-flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-ringcol rounded p-1">
           &uarr; Kembali ke atas
         </a>
       </div>
@@ -1738,7 +1800,7 @@
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
 
-            // 4. CERTIFICATE FILTER & MODAL (WITH 2-PAGE SUPPORT)
+      // 4. CERTIFICATE FILTER & MODAL (WITH 2-PAGE SUPPORT)
       var filterBtns = document.querySelectorAll('.cert-filter-btn');
       var certCards = document.querySelectorAll('.cert-card');
       var certModal = document.getElementById('cert-modal');
@@ -1787,34 +1849,49 @@
       function setPageUI(page) {
         currentShowingPage = page;
         var isFront = page === 'front';
+        var isEn = window.currentLang === 'en';
         var activeSrc = isFront ? currentFrontSrc : currentBackSrc;
         modalImg.src = activeSrc;
-        modalImg.alt = currentCertTitle + ' - ' + (isFront ? 'Halaman Depan' : 'Halaman Belakang (Transkrip)');
+        modalImg.alt = currentCertTitle + ' - ' + (isFront ? (isEn ? 'Front Page' : 'Halaman Depan') : (isEn ? 'Back Page (Transcript)' : 'Halaman Belakang (Transkrip)'));
         modalLink.href = activeSrc;
         if (modalLinkText) {
-          modalLinkText.textContent = isFront ? 'Buka Halaman Depan' : 'Buka Halaman Belakang';
+          modalLinkText.textContent = isFront 
+            ? (isEn ? 'Open Front Page' : 'Buka Halaman Depan') 
+            : (isEn ? 'Open Back Page' : 'Buka Halaman Belakang');
         }
 
         if (btnFront && btnBack) {
           if (isFront) {
             btnFront.className = 'px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all bg-surface text-brand shadow-sm border border-line';
             btnBack.className = 'px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all text-ink-muted hover:text-ink';
-            if (pageIndicator) pageIndicator.textContent = 'Halaman 1 dari 2 (Depan)';
+            if (pageIndicator) pageIndicator.textContent = isEn ? 'Page 1 of 2 (Front)' : 'Halaman 1 dari 2 (Depan)';
           } else {
             btnFront.className = 'px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all text-ink-muted hover:text-ink';
             btnBack.className = 'px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all bg-surface text-brand shadow-sm border border-line';
-            if (pageIndicator) pageIndicator.textContent = 'Halaman 2 dari 2 (Belakang / Nilai)';
+            if (pageIndicator) pageIndicator.textContent = isEn ? 'Page 2 of 2 (Back / Grades)' : 'Halaman 2 dari 2 (Belakang / Nilai)';
           }
         }
       }
 
-      window.openCertModal = function(src, title, issuer, date, desc, backSrc) {
+      window.openCertModal = function(src, title, issuer, date, desc, backSrc, certIndex) {
+        window.currentActiveModalCert = (typeof certIndex === 'number') ? certIndex : null;
+        var lang = window.currentLang || 'id';
+        var isEn = lang === 'en';
+
+        if (typeof certIndex === 'number' && window.certTranslations && window.certTranslations[lang] && window.certTranslations[lang][certIndex]) {
+          var certItem = window.certTranslations[lang][certIndex];
+          title = certItem.modalTitle;
+          issuer = certItem.issuer;
+          date = certItem.date;
+          desc = certItem.modalDesc;
+        }
+
         currentFrontSrc = src;
         currentBackSrc = backSrc || null;
         currentCertTitle = title;
         modalTitle.textContent = title;
         modalIssuer.textContent = issuer;
-        modalDate.textContent = 'Diterbitkan: ' + date;
+        modalDate.textContent = (isEn ? 'Issued: ' : 'Diterbitkan: ') + date;
         modalDesc.textContent = desc;
 
         if (currentBackSrc) {
@@ -1847,7 +1924,7 @@
           modalImg.src = src;
           modalImg.alt = title;
           modalLink.href = src;
-          if (modalLinkText) modalLinkText.textContent = 'Buka Berkas Asli';
+          if (modalLinkText) modalLinkText.textContent = isEn ? 'Open Original File' : 'Buka Berkas Asli';
         }
 
         certModal.classList.remove('hidden');
@@ -1883,6 +1960,7 @@
         modalImg.src = '';
         currentFrontSrc = '';
         currentBackSrc = '';
+        window.currentActiveModalCert = null;
         document.body.style.overflow = '';
       }
 
