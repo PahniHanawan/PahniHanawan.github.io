@@ -24,7 +24,7 @@
 
       "hero.eyebrow": "Web Developer · Kabupaten Bandung",
       "hero.tagline": "Membangun aplikasi web Laravel yang andal, rapi, dan berdampak nyata.",
-      "hero.summary": "Lulusan S1 Teknik Informatika STMIK Mardira Indonesia dengan IPK 3.78 dan pengalaman magang di Perum BULOG sebagai pengembang Aplikasi Monitoring Pekerjaan, mencakup modul kontrak, progres fisik, dashboard grafik, dan pengelolaan hak akses pengguna. Memiliki minat pada pengembangan aplikasi web dan sistem informasi. Terbiasa bekerja dengan Laravel, PHP, MySQL, dan Git, serta sedang memperdalam Python. Memiliki kemampuan analitis, ketelitian, dan kemauan belajar yang tinggi, serta mampu bekerja secara mandiri maupun dalam tim. Dengan motivasi tinggi untuk belajar dan berkembang, siap berkontribusi dan menerapkan pengetahuan yang dimiliki dalam lingkungan kerja profesional.",
+      "hero.summary": "Lulusan S1 Teknik Informatika STMIK Mardira Indonesia (IPK 3.78) dengan pengalaman magang di Perum BULOG mengembangkan Aplikasi Monitoring Pekerjaan (kontrak, progres fisik, dashboard visual, dan manajemen akses). Menguasai Laravel, PHP, MySQL, dan Git, serta sedang memperdalam Python dengan motivasi belajar dan berkontribusi yang tinggi.",
       "hero.chipEdu": "🎓 S1 Informatika · IPK 3.78",
       "hero.chipIntern": "🏢 Magang di Perum BULOG",
       "hero.chipProjects": "⚡ 5 Proyek Laravel",
@@ -177,7 +177,7 @@
 
       "hero.eyebrow": "Web Developer · Bandung Regency, Indonesia",
       "hero.tagline": "Building reliable, clean-architecture, and high-impact Laravel web applications.",
-      "hero.summary": "Informatics graduate from STMIK Mardira Indonesia with a 3.78 GPA and internship experience at Perum BULOG developing a Job Monitoring Application, covering contract modules, physical progress, graphical dashboards, and user access management. Passionate about web application and information systems development. Proficient in Laravel, PHP, MySQL, and Git, and currently expanding skills in Python. Possesses strong analytical skills, attention to detail, high eagerness to learn, and the ability to work independently or in a team. With high motivation to learn and grow, ready to contribute and apply expertise in a professional work environment.",
+      "hero.summary": "Informatics graduate from STMIK Mardira Indonesia (3.78 GPA) with internship experience at Perum BULOG developing a Job Monitoring Application (contracts, physical progress, visual dashboards, and access management). Proficient in Laravel, PHP, MySQL, and Git, and actively expanding into Python with high motivation to learn and deliver impact professionally.",
       "hero.chipEdu": "🎓 B.S. in Informatics · GPA 3.78",
       "hero.chipIntern": "🏢 Internship at Perum BULOG",
       "hero.chipProjects": "⚡ 5 Laravel Projects",
